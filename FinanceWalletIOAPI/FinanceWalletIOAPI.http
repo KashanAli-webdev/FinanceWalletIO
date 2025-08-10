@@ -1,0 +1,6 @@
+@FinanceWalletIOAPI_HostAddress = http://localhost:5093
+
+GET {{FinanceWalletIOAPI_HostAddress}}/api/IncomeSource/GetList
+Accept: application/json
+
+###
