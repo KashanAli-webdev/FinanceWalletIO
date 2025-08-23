@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinanceWalletIOAPI.Models
 {
-    public sealed class IncomeTransaction
+    public sealed class ExpenseTransaction
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        public Guid IncomeSourceId { get; set; }
+        public Guid ExpenseSourceId { get; set; }
 
         public string UserId { get; set; } = null!;
 

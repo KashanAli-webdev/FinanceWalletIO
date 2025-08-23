@@ -28,14 +28,14 @@ namespace FinanceWalletIOAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("AutoRepeat")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("IncomeType")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsRecurring")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -46,7 +46,7 @@ namespace FinanceWalletIOAPI.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int?>("RecurringInterval")
+                    b.Property<int>("RepeatInterval")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -73,7 +73,7 @@ namespace FinanceWalletIOAPI.Migrations
                     b.Property<Guid>("IncomeSourceId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsRecurringInstance")
+                    b.Property<bool>("IsAutoAdded")
                         .HasColumnType("bit");
 
                     b.Property<string>("Notes")

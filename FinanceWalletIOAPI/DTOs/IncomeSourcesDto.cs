@@ -4,41 +4,41 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FinanceWalletIOAPI.DTOs
 {
-    public class IncomeListDto : IApiResult
+    public sealed class IncomeListDto : IApiResult
     {
         public Guid Id { get; set; }
-        public IncomeStreams IncomeType { get; set; }
+        public string IncomeType { get; set; } = null!;
         public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')
-        public IncomeInterval? RecurringInterval { get; set; }
+        public string RepeatInterval { get; set; } = null!;
         public string? Notes { get; set; }
     }
 
-    public class IncomeDetailsDto : IApiResult
+    public sealed class IncomeDetailsDto : IApiResult
     {
-        public IncomeStreams IncomeType { get; set; }
+        public string IncomeType { get; set; } = null!;
         public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')
-        public bool IsRecurring { get; set; }  // Indicates if it's a repeating income
-        public IncomeInterval? RecurringInterval { get; set; }
+        public bool AutoRepeat { get; set; }  // Indicates if it's a repeating income
+        public string RepeatInterval { get; set; } = null!;
         public string? Notes { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 
-    public class CreateIncomeDto
+    public sealed class CreateIncomeDto
     {
         [Required] public IncomeStreams IncomeType { get; set; }
-        [StringLength(30)] public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')
-        [Required] public bool IsRecurring { get; set; }  // Indicates if it's a repeating income
-        public IncomeInterval? RecurringInterval { get; set; }
+        [Required, StringLength(30)] public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')
+        [Required] public bool AutoRepeat { get; set; }  // Indicates if it's a repeating income        
+        [EnumDataType(typeof(IncomeInterval))] public IncomeInterval RepeatInterval { get; set; } = 0;        
         [StringLength(500)] public string? Notes { get; set; }
     }
 
-    public class UpdateIncomeDto
+    public sealed class UpdateIncomeDto
     {
-        public Guid Id { get; set; }
-        public IncomeStreams IncomeType { get; set; }
-        public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')
-        public bool IsRecurring { get; set; }  // Indicates if it's a repeating income
-        public IncomeInterval? RecurringInterval { get; set; }
-        public string? Notes { get; set; }
+        [Required] public Guid Id { get; set; }        
+        [Required] public IncomeStreams IncomeType { get; set; }        
+        [Required, StringLength(30)] public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')        
+        [Required] public bool AutoRepeat { get; set; }  // Indicates if it's a repeating income        
+        [EnumDataType(typeof(IncomeInterval))] public IncomeInterval RepeatInterval { get; set; }        
+        [StringLength(500)] public string? Notes { get; set; }
     }
 }

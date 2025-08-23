@@ -2,16 +2,16 @@
 
 namespace FinanceWalletIOAPI.DTOs.Mappers
 {
-    public class IncomeSourceDtoMapper
+    public sealed class IncomeSourceDtoMapper
     {
         public IncomeListDto ListMap(IncomeSources income)
         {
             return new IncomeListDto
             {
                 Id = income.Id,
-                IncomeType = income.IncomeType,
+                IncomeType = income.IncomeType.ToString(),
                 Name = income.Name,
-                RecurringInterval = income.RecurringInterval,
+                RepeatInterval = income.RepeatInterval.ToString(),
                 Notes = income.Notes
             };
         }
@@ -20,10 +20,10 @@ namespace FinanceWalletIOAPI.DTOs.Mappers
         {
             return new IncomeDetailsDto
             {
-                IncomeType = income.IncomeType,
+                IncomeType = income.IncomeType.ToString(),
                 Name = income.Name,
-                IsRecurring = income.IsRecurring,
-                RecurringInterval = income.RecurringInterval,
+                AutoRepeat = income.AutoRepeat,
+                RepeatInterval = income.RepeatInterval.ToString(),
                 Notes = income.Notes,
                 CreatedAt = income.CreatedAt
             };
@@ -37,8 +37,8 @@ namespace FinanceWalletIOAPI.DTOs.Mappers
                 UserId = userId,
                 IncomeType = dto.IncomeType,
                 Name = dto.Name,
-                IsRecurring = dto.IsRecurring,
-                RecurringInterval = dto.IsRecurring ? dto.RecurringInterval : 0,
+                AutoRepeat = dto.AutoRepeat,
+                RepeatInterval = dto.RepeatInterval,
                 Notes = dto.Notes,
                 CreatedAt = DateTime.UtcNow
             };
@@ -48,8 +48,8 @@ namespace FinanceWalletIOAPI.DTOs.Mappers
         {
             income.Name = dto.Name;
             income.IncomeType = dto.IncomeType;
-            income.IsRecurring = dto.IsRecurring;
-            income.RecurringInterval = dto.IsRecurring ? dto.RecurringInterval : 0;
+            income.AutoRepeat = dto.AutoRepeat;
+            income.RepeatInterval = dto.RepeatInterval;
             income.Notes = dto.Notes;
 
             return income;

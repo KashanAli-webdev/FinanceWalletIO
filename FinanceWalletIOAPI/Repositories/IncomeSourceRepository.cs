@@ -1,6 +1,7 @@
 ﻿using FinanceWalletIOAPI.Data;
 using FinanceWalletIOAPI.DTOs;
 using FinanceWalletIOAPI.DTOs.Base;
+using FinanceWalletIOAPI.DTOs.Enums;
 using FinanceWalletIOAPI.DTOs.Mappers;
 using FinanceWalletIOAPI.IRepositories;
 using FinanceWalletIOAPI.IServices;
@@ -12,142 +13,125 @@ namespace FinanceWalletIOAPI.Repositories
     public class IncomeSourceRepository : IIncomeSourceRepository
     {
         private readonly AppDbContext _context;
-        private readonly ICurrentUserService _currentUserService;
-        private readonly IncomeSourceDtoMapper _incomeDtoMapper;
+        private readonly ICurrentUserService _currentUserServ;
+        private readonly IncomeSourceDtoMapper _dtoMapper;
+        private readonly IResponseService _resServ;
         public IncomeSourceRepository(
             AppDbContext context, 
-            ICurrentUserService currentUser, 
-            IncomeSourceDtoMapper incomeDtoMapper)
+            ICurrentUserService currentUserServ, 
+            IncomeSourceDtoMapper incomeDtoMapper,
+            IResponseService resServ)
         {
             _context = context;
-            _currentUserService = currentUser;
-            _incomeDtoMapper = incomeDtoMapper;
+            _currentUserServ = currentUserServ;
+            _dtoMapper = incomeDtoMapper;
+            _resServ = resServ;
         }
-
 
         public async Task<IEnumerable<IApiResult>> GetAllAsync()
         {
-            if (_currentUserService.IsUserIdEmpty)
-                return new List<ResponseDto>
-                {
-                    new ResponseDto
-                    {
-                        Status = false,
-                        Msg = "User is not authenticated!"
-                    }
-                }; 
+            if (_currentUserServ.IsUserIdEmpty)
+                return new List<ResponseDto> { _resServ.UnAuthUserRes() };
             
-            return await _context.IncomeSources.Where(i => i.UserId == _currentUserService.UserId).AsNoTracking()
-                .Select(i => _incomeDtoMapper.ListMap(i)).ToListAsync();
+            return await _context.IncomeSources.Where(i => i.UserId == _currentUserServ.UserId)
+                .AsNoTracking().Select(i => _dtoMapper.ListMap(i)).ToListAsync();
         }
 
         public async Task<IApiResult> GetByIdAsync(Guid id)
         {
+            if (_currentUserServ.IsUserIdEmpty)
+                return _resServ.UnAuthUserRes();
+
             var income = await FindIncomeInDbAsync(id);
             if (income == null)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = $"{id}: income Id not exists in db..",
-                };
-            return _incomeDtoMapper.DetailsMap(income);
+                return _resServ.NotFoundRes("income");
+
+            return _dtoMapper.DetailsMap(income);
         }
 
         public async Task<ResponseDto> CreateAsync(CreateIncomeDto dto)
         {
-            if (_currentUserService.IsUserIdEmpty)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = $"User is not authenticated!"
-                };
+            if (_currentUserServ.IsUserIdEmpty)
+                return _resServ.UnAuthUserRes();
 
-            var existed = await _context.IncomeSources.AnyAsync(i => i.UserId == _currentUserService.UserId &&
+            var incomeInterval = ValidateIncomeInterval(dto.AutoRepeat, dto.RepeatInterval);
+            if (incomeInterval != null)
+                return incomeInterval;
+
+            var existed = await _context.IncomeSources.AnyAsync(i => i.UserId == _currentUserServ.UserId &&
                 i.IncomeType == dto.IncomeType && i.Name == dto.Name);
-
             if (existed)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = $"Income Source already exist with {dto.Name} and {dto.IncomeType}",
-                };
+                return _resServ.ConflictRes("income");
 
-            var income = _incomeDtoMapper.CreateMap(_currentUserService.UserId!, dto);
+            var income = _dtoMapper.CreateMap(_currentUserServ.UserId!, dto);
 
             _context.IncomeSources.Add(income);
             await _context.SaveChangesAsync();
 
-            return new ResponseDto
-            {
-                Status = true,
-                Msg = $"{income.Name} income successfully created!",
-                Data = _incomeDtoMapper.DetailsMap(income)
-            };
+            return _resServ.OkRes("income created successfully", _dtoMapper.DetailsMap(income));
         }
 
         public async Task<ResponseDto> UpdateAsync(Guid id, UpdateIncomeDto dto)
         {
+            if (_currentUserServ.IsUserIdEmpty)
+                return _resServ.UnAuthUserRes();
+
             if (id != dto.Id)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = $"Route id: {id} not match with reqested model id: {dto.Id}!"
-                };
+                return _resServ.BadRequestRes($"id miss matched!");
 
             var income = await _context.IncomeSources.FirstOrDefaultAsync(i => i.Id == id && 
-                i.UserId == _currentUserService.UserId);
+                i.UserId == _currentUserServ.UserId);
+
+            var incomeInterval = ValidateIncomeInterval(dto.AutoRepeat, dto.RepeatInterval);
+            if (incomeInterval != null)
+                return incomeInterval;
 
             if (income == null)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = $"The Income with this id: {id} not exist!"
-                };
+                return _resServ.NotFoundRes("income");
 
-            var existed = await _context.IncomeSources.AnyAsync(i => i.UserId == _currentUserService.UserId && 
+            var existed = await _context.IncomeSources.AnyAsync(i => i.UserId == _currentUserServ.UserId && 
                 i.IncomeType == dto.IncomeType && i.Name == dto.Name && i.Id != dto.Id);
 
             if (existed)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = $"Income Source already exist with {dto.Name} and {dto.IncomeType}",
-                };
-            _incomeDtoMapper.UpdateMap(income, dto);
+                return _resServ.ConflictRes("income");
+
+            _dtoMapper.UpdateMap(income, dto);
             await _context.SaveChangesAsync();
-            return new ResponseDto
-            {
-                Status = true,
-                Msg = $"{income.Name} income successfully updated!",
-                Data = _incomeDtoMapper.DetailsMap(income)
-            };
+
+            return _resServ.OkRes("income updated successfully", _dtoMapper.DetailsMap(income));
         }
 
         public async Task<ResponseDto> DeleteAsync(Guid id)
         {
+            if (_currentUserServ.IsUserIdEmpty)
+                return _resServ.UnAuthUserRes();
+
             var income = await FindIncomeInDbAsync(id);
             if (income == null)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = $"The Income with this id: {id} not exist!"
-                }; 
-            
+                return _resServ.NotFoundRes("income");
+
             _context.IncomeSources.Remove(income);
             await _context.SaveChangesAsync();
-            
-            return new ResponseDto
-            {
-                Status = true,
-                Msg = $"{income.Name} income successfully deleted.",
-                Data = _incomeDtoMapper.DetailsMap(income)
-            };
+
+            return _resServ.OkRes("income deleted successfully", _dtoMapper.DetailsMap(income));
         }
 
         public async Task<IncomeSources?> FindIncomeInDbAsync(Guid id)
         {
             return await _context.IncomeSources.AsNoTracking()
-                .FirstOrDefaultAsync(i => i.Id == id && i.UserId == _currentUserService.UserId);
+                .FirstOrDefaultAsync(i => i.Id == id && i.UserId == _currentUserServ.UserId);
+        }
+
+        private ResponseDto? ValidateIncomeInterval(bool recurring, IncomeInterval interval)
+        {
+            bool notRepeat = !recurring && interval != IncomeInterval.None;
+            bool repeat = recurring && interval == IncomeInterval.None;
+            if (notRepeat || repeat)
+                return _resServ.BadRequestRes(
+                    $"income interval shouldn't be {interval.ToString()}," +
+                    $" if auto repeat is {recurring}");
+
+            return null;
         }
     }
 }

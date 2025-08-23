@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FinanceWalletIOAPI.Models
 {
-    public sealed class IncomeSources
+    public sealed class ExpenseSource
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
@@ -11,7 +11,7 @@ namespace FinanceWalletIOAPI.Models
         public string UserId { get; set; } = null!;
 
         [Required]
-        public IncomeStreams IncomeType { get; set; }
+        public ExpenseStreams ExpenseType { get; set; }
 
         [StringLength(30)]
         public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')

@@ -1,6 +1,7 @@
 ﻿using FinanceWalletIOAPI.DTOs;
 using FinanceWalletIOAPI.DTOs.Base;
 using FinanceWalletIOAPI.IRepositories;
+using FinanceWalletIOAPI.IServices;
 using FinanceWalletIOAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -15,14 +16,16 @@ namespace FinanceWalletIOAPI.Repositories
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _config;
-
+        private readonly IResponseService _resServ;
         public AuthRepository(UserManager<User> userManager,
                               SignInManager<User> signInManager,
-                              IConfiguration config)
+                              IConfiguration config,
+                              IResponseService resServ)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _config = config;
+            _resServ = resServ;
         }
 
 
@@ -30,32 +33,17 @@ namespace FinanceWalletIOAPI.Repositories
         {
             var existingUser = await _userManager.FindByEmailAsync(dto.Email);
             if (existingUser != null)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = "This emial already associate with an other email."
-                };
+                return _resServ.ConflictRes(dto.Email);
 
-            var user = new User
-            {
-                UserName = dto.Email,
-                Email = dto.Email,
-                Name = dto.Name
-            };
+            var user = new User{ UserName = dto.Email, Email = dto.Email, Name = dto.Name };
+
             var result = await _userManager.CreateAsync(user, dto.Password);
             if (!result.Succeeded)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = string.Join(", ", result.Errors.Select(e => e.Description))
-                };
+                return _resServ.BadRequestRes(
+                    string.Join(", ", result.Errors.Select(e => e.Description)));
 
-            return new ResponseDto
-            {
-                Status = true,
-                Msg = "User registered succefully",
-                Data = new { id = $"{user.Id}", idDataType = $"{user.Id.GetType()}" } // for testing
-            };
+            return _resServ.OkRes("User registered succefully",
+                new { id = $"{user.Id}", idDataType = $"{user.Id.GetType()}" });
         }
 
 
@@ -63,27 +51,15 @@ namespace FinanceWalletIOAPI.Repositories
         {
             var existingUser = await _userManager.FindByEmailAsync(dto.Email);
             if (existingUser == null)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = $"{dto.Email} not exist!"
-                };
+                return _resServ.NotFoundRes(dto.Email);
 
             var result = await _signInManager.CheckPasswordSignInAsync(existingUser, dto.Password, false);
             if (!result.Succeeded)
-                return new ResponseDto
-                {
-                    Status = false,
-                    Msg = $"Wrong email or password!"
-                };
+                return _resServ.BadRequestRes("Wrong email or password!");
 
             string token = GenerateJWToken(existingUser);
-            return new ResponseDto
-            {
-                Status = true,
-                Msg = token,
-                Data = new { id = $"{existingUser.Id}", idDataType = $"{existingUser.Id.GetType()}" } // for testing
-            };
+            return _resServ.OkRes(token, 
+                new { id = $"{existingUser.Id}", idDataType = $"{existingUser.Id.GetType()}" });
         }
 
 
@@ -114,11 +90,7 @@ namespace FinanceWalletIOAPI.Repositories
         public async Task<ResponseDto> LogoutAsync()
         {
             await _signInManager.SignOutAsync();
-            return new ResponseDto
-            {
-                Status = true,
-                Msg = "User logged out successfully"
-            };
+            return _resServ.OkRes("User signout successfully", null);
         }
     }
 }

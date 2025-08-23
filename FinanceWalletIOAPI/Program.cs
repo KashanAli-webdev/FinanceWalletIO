@@ -13,7 +13,6 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -22,12 +21,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
 builder.Services.AddScoped<IAuthRepository, AuthRepository>(); 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IResponseService, ResponseService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IncomeSourceDtoMapper>();
 builder.Services.AddScoped<IIncomeSourceRepository, IncomeSourceRepository>();
+builder.Services.AddScoped<IncomeTransactionDtoMapper>();
+builder.Services.AddScoped<IIncomeTransactionRepository, IncomeTransactionRepository>();
 
 
 

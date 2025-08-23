@@ -1,5 +1,6 @@
 ﻿using FinanceWalletIOAPI.DTOs;
 using FinanceWalletIOAPI.IRepositories;
+using FinanceWalletIOAPI.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceWalletIOAPI.Controllers
@@ -9,9 +10,11 @@ namespace FinanceWalletIOAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthRepository _authRepo;
-        public AuthController(IAuthRepository authServices)
+        private readonly IResponseService _resServ;
+        public AuthController(IAuthRepository authServices, IResponseService resServ)
         {
             _authRepo = authServices;
+            _resServ = resServ;
         }
 
 
@@ -21,30 +24,30 @@ namespace FinanceWalletIOAPI.Controllers
             if (!ModelState.IsValid) 
                 return BadRequest(ModelState);
 
-            var result = await _authRepo.RegisterAsync(dto);
-            if (result.Status == false)
-                return Conflict(result);
+            var res = await _authRepo.RegisterAsync(dto);
+            if (!res.Status)  // Check if res is ResponseDto than assign a new variable(dto) to the res.
+                return _resServ.HttpRes(this, res);
 
-            return Ok(result);
+            return Ok(res);
         }
 
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
-            var token = await _authRepo.LoginAsync(dto);
-            if (token == null)
-                return Unauthorized(token);
+            var res = await _authRepo.LoginAsync(dto);
+            if (!res.Status)
+                return _resServ.HttpRes(this, res);
 
-            return Ok(token);
+            return Ok(res);
         }
 
 
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            var result = await _authRepo.LogoutAsync();
-            return Ok(result);
+            var res = await _authRepo.LogoutAsync();
+            return Ok(res);
         }
     }
 }

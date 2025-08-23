@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FinanceWalletIOAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitIncomeSystem : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,8 +59,8 @@ namespace FinanceWalletIOAPI.Migrations
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IncomeType = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    IsRecurring = table.Column<bool>(type: "bit", nullable: false),
-                    RecurringInterval = table.Column<int>(type: "int", nullable: true),
+                    AutoRepeat = table.Column<bool>(type: "bit", nullable: false),
+                    RepeatInterval = table.Column<int>(type: "int", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -79,7 +79,7 @@ namespace FinanceWalletIOAPI.Migrations
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ReceivedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    IsRecurringInstance = table.Column<bool>(type: "bit", nullable: false),
+                    IsAutoAdded = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
