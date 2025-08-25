@@ -9,22 +9,22 @@ namespace FinanceWalletIOAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController, Authorize]
-    public class IncomeSourceController : ControllerBase
+    public class ExpenseSourceController : ControllerBase
     {
-        private readonly IIncomeSourceRepository _incomeRepo;
+        private readonly IExpenseSourceRepository _expenseRepo;
         private readonly IResponseService _resServ;
-        public IncomeSourceController(
-            IIncomeSourceRepository incomeSourceRepo,
+        public ExpenseSourceController(
+            IExpenseSourceRepository expenseRepo,
             IResponseService resServ)
         {
-            _incomeRepo = incomeSourceRepo;
+            _expenseRepo = expenseRepo;
             _resServ = resServ;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetList()
         {
-            var list = await _incomeRepo.GetAllAsync();
+            var list = await _expenseRepo.GetAllAsync();
 
             if (list.OfType<ResponseDto>().Any(r => r.Status == false))
                 return Unauthorized(list);
@@ -35,7 +35,7 @@ namespace FinanceWalletIOAPI.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var res = await _incomeRepo.GetByIdAsync(id);
+            var res = await _expenseRepo.GetByIdAsync(id);
 
             if (res is ResponseDto resDto && !resDto.Status)  // Check if res is ResponseDto than assign a new variable(dto) to the res.
                 return _resServ.HttpRes(this, resDto);
@@ -44,12 +44,12 @@ namespace FinanceWalletIOAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateIncome(CreateIncomeDto dto)
+        public async Task<IActionResult> CreateIncome(CreateExpenseDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var res = await _incomeRepo.CreateAsync(dto);
+            var res = await _expenseRepo.CreateAsync(dto);
 
             if (res is ResponseDto resDto && !resDto.Status)  // Check if res is ResponseDto than assign a new variable(dto) to the res.
                 return _resServ.HttpRes(this, resDto);
@@ -58,12 +58,12 @@ namespace FinanceWalletIOAPI.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateIncome(Guid id, UpdateIncomeDto dto)
+        public async Task<IActionResult> UpdateIncome(Guid id, UpdateExpenseDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var res = await _incomeRepo.UpdateAsync(id, dto);
+            var res = await _expenseRepo.UpdateAsync(id, dto);
 
             if (res is ResponseDto resDto && !resDto.Status)  // Check if res is ResponseDto than assign a new variable(dto) to the res.
                 return _resServ.HttpRes(this, resDto);
@@ -73,14 +73,14 @@ namespace FinanceWalletIOAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteIncome(Guid id) 
+        public async Task<IActionResult> DeleteIncome(Guid id)
         {
-            var res = await _incomeRepo.DeleteAsync(id);
+            var res = await _expenseRepo.DeleteAsync(id);
 
             if (res is ResponseDto resDto && !resDto.Status)  // Check if res is ResponseDto than assign a new variable(dto) to the res.
                 return _resServ.HttpRes(this, resDto);
 
-            return Ok(res); 
+            return Ok(res);
         }
     }
 }

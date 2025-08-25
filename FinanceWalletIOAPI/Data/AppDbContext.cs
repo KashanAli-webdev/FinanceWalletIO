@@ -9,5 +9,7 @@ namespace FinanceWalletIOAPI.Data
 
         public DbSet<IncomeSources> IncomeSources { get; set; }
         public DbSet<IncomeTransaction> IncomeTransactions { get; set; }
+        public DbSet<ExpenseSources> ExpenseSources { get; set; }
+        public DbSet<ExpenseTransaction> ExpenseTransactions { get; set; }
     }
 }

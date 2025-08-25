@@ -19,8 +19,8 @@ namespace FinanceWalletIOAPI.Models
         [Required]
         public bool AutoRepeat { get; set; }  // Indicates if it's a repeating income
 
-        [EnumDataType(typeof(IncomeInterval))]
-        public IncomeInterval RepeatInterval { get; set; }
+        [EnumDataType(typeof(TimeInterval))]
+        public TimeInterval RepeatInterval { get; set; }
 
         [StringLength(500)]
         public string? Notes { get; set; }

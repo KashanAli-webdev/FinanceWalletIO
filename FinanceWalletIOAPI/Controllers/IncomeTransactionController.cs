@@ -70,7 +70,6 @@ namespace FinanceWalletIOAPI.Controllers
                 return _resServ.HttpRes(this, resDto);
 
             return Ok(res);
-
         }
 
         [HttpDelete("{id:guid}")]

@@ -17,7 +17,7 @@ namespace FinanceWalletIOAPI.Models
         public decimal Amount { get; set; }
 
         [Required]
-        public DateTime ReceivedDate { get; set; }  // When income was received
+        public DateTime DeductDate { get; set; }  // When income was received
 
         [StringLength(500)]
         public string? Notes { get; set; }  // Optional note

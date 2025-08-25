@@ -122,10 +122,10 @@ namespace FinanceWalletIOAPI.Repositories
                 .FirstOrDefaultAsync(i => i.Id == id && i.UserId == _currentUserServ.UserId);
         }
 
-        private ResponseDto? ValidateIncomeInterval(bool recurring, IncomeInterval interval)
+        private ResponseDto? ValidateIncomeInterval(bool recurring, TimeInterval interval)
         {
-            bool notRepeat = !recurring && interval != IncomeInterval.None;
-            bool repeat = recurring && interval == IncomeInterval.None;
+            bool notRepeat = !recurring && interval != TimeInterval.None;
+            bool repeat = recurring && interval == TimeInterval.None;
             if (notRepeat || repeat)
                 return _resServ.BadRequestRes(
                     $"income interval shouldn't be {interval.ToString()}," +

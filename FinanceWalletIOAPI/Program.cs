@@ -21,14 +21,21 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+// Common Servies and Repositories
 builder.Services.AddScoped<IAuthRepository, AuthRepository>(); 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IResponseService, ResponseService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+// Income Module
 builder.Services.AddScoped<IncomeSourceDtoMapper>();
 builder.Services.AddScoped<IIncomeSourceRepository, IncomeSourceRepository>();
 builder.Services.AddScoped<IncomeTransactionDtoMapper>();
 builder.Services.AddScoped<IIncomeTransactionRepository, IncomeTransactionRepository>();
+// Expense Module
+builder.Services.AddScoped<ExpenseSourceDtoMapper>();
+builder.Services.AddScoped<IExpenseSourceRepository, ExpenseSourceRepository>();
+builder.Services.AddScoped<ExpenseTransactionDtoMapper>();
+builder.Services.AddScoped<IExpenseTransactionRepository, ExpenseTransactionRepository>();
 
 
 

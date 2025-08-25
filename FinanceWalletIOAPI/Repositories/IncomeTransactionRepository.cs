@@ -102,7 +102,7 @@ namespace FinanceWalletIOAPI.Repositories
 
             var income = await _incomeRepo.FindIncomeInDbAsync(dto.IncomeSourceId);
             if (income == null)
-                return _resServ.NotFoundRes(nameof(IncomeSources));
+                return _resServ.NotFoundRes("income transaction");
 
             var existed = await _context.IncomeTransactions
                 .AnyAsync(it => it.UserId == _userId && it.IncomeSourceId == dto.IncomeSourceId &&
