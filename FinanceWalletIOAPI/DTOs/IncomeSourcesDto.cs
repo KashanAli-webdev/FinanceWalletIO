@@ -10,7 +10,6 @@ namespace FinanceWalletIOAPI.DTOs
         public string IncomeType { get; set; } = null!;
         public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')
         public string RepeatInterval { get; set; } = null!;
-        public string? Notes { get; set; }
     }
 
     public sealed class IncomeDetailsDto : IApiResult

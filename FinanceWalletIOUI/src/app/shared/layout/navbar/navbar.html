@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand bg-dark bg-gradient bg-opacity-75 rounded-bottom-3 px-md-3">
+
+  <div class="container-fluid">
+
+    <a class="navbar-brand text-light d-none d-lg-block" routerLink="/income-home">
+      <i class="bi bi-wallet2 me-3"></i>
+      <span class="fw-bold">Finance Wallet IO</span>
+    </a>
+
+    <button class="navbar-toggler bg-light text-dark d-block d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#filterPanel">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <ul class="navbar-nav ms-auto d-flex flex-row align-items-center gap-sm-3">
+
+      <li class="nav-item d-none d-sm-block">
+        <button class="btn btn-light position-relative">
+          <i class="bi bi-bell-fill"></i>
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            5
+          </span>
+        </button>
+      </li>
+
+      <li class="nav-item d-none d-sm-block">
+        <button class="btn btn-light" (click)="ThemeToggler()">
+          <i class="bi bi-{{themeIcone}}"></i>
+        </button>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-light" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <span> John</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item">
+              <i class="bi bi-person-circle"></i> Profile</a>
+          </li>
+          <li class="d-block d-sm-none"><a class="dropdown-item">
+              <i class="bi bi-bell-fill"></i> Notification</a>
+          </li>
+          <li class="d-block d-sm-none"><button class="dropdown-item text-capitalize" (click)="ThemeToggler()">
+              <i class="bi bi-{{themeIcone}}"></i> {{themeName}}</button>
+          </li>
+          <li><a class="dropdown-item">
+              <i class="bi bi-gear-fill"></i> Settings</a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item text-danger">
+              <i class="bi bi-door-closed-fill"></i> Logout</a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+
+  </div>
+
+</nav>
+
+<article class="offcanvas offcanvas-start bg-dark bg-gradient d-block d-lg-none overflow-auto" id="filterPanel">
+
+  <div class="offcanvas-header">
+    <span class="fw-bold text-light">
+      <i class="bi bi-wallet2 me-2"></i>Finance Wallet IO
+    </span>
+    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <div class="offcanvas-body">
+    <div class="d-flex flex-column p-3">
+
+      <h6 class="fw-bold text-secondary">Menu</h6>
+
+      <app-features-menu />
+    </div>
+  </div>
+
+</article>

@@ -1,0 +1,56 @@
+<button class="btn btn-warning bg-gradient bg-opacity-10 px-3" data-bs-toggle="modal" data-bs-target="#updateModal">
+  <i class="bi bi-pencil-square"></i></button>
+
+<div class="modal fade" id="updateModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header bg-warning bg-gradient shadow-sm">
+        <h5 class="modal-title w-100 fw-bold text-light">Update Expense</h5>
+      </div>
+
+      <div class="modal-body">
+        <form class="d-flex flex-column gap-1 text-start">
+
+          <div>
+            <label class="form-label">Expense Type</label>
+            <select class="form-select">
+              <option selected disabled>Choose type...</option>
+              <option>Rent</option>
+              <option>Bills</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control">
+          </div>
+
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="autoRepeatExpenseUpdate">
+            <label class="form-check-label" for="autoRepeatExpenseUpdate">Auto Repeat</label>
+          </div>
+
+          <div>
+            <label class="form-label">Repeat Interval</label>
+            <select class="form-select">
+              <option selected disabled>Choose type...</option>
+              <option>Weekly</option>
+              <option>Monthly</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label">Notes</label>
+            <textarea class="form-control"></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer bg-warning-subtle bg-gradient border-warning-subtle">
+        <button class="btn btn-secondary shadow-sm" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-warning bg-gradient bg-opacity-50 shadow-sm" data-bs-dismiss="modal">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

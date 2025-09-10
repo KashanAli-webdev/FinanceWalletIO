@@ -1,0 +1,47 @@
+<button class="btn btn-primary bg-gradient bg-opacity-10 shadow-sm px-3" data-bs-toggle="modal"
+  data-bs-target="#createOutTransactModal">+ Add</button>
+
+<div class="modal fade" id="createOutTransactModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary bg-gradient shadow-sm">
+        <h5 class="modal-title w-100 fw-bold text-center text-light">Add Expense Transaction</h5>
+      </div>
+
+      <div class="modal-body">
+        <form class="d-flex flex-column gap-1">
+
+          <div>
+            <label class="form-label">Expense Source</label>
+            <select class="form-select">
+              <option selected disabled>Choose source...</option>
+              <option>Rent</option>
+              <option>Bills</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label">Amount</label>
+            <input type="number" class="form-control">
+          </div>
+
+          <div>
+            <label class="form-label">Deduct Date</label>
+            <input type="date" class="form-control">
+          </div>
+
+          <div>
+            <label class="form-label">Notes</label>
+            <textarea class="form-control"></textarea>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer bg-primary-subtle bg-gradient border-primary-subtle">
+        <button class="btn btn-secondary shadow-sm" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary bg-gradient bg-opacity-50 shadow-sm" data-bs-dismiss="modal">Add</button>
+      </div>
+    </div>
+  </div>
+</div>

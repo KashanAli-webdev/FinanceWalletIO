@@ -12,7 +12,6 @@ namespace FinanceWalletIOAPI.DTOs.Mappers
                 IncomeType = income.IncomeType.ToString(),
                 Name = income.Name,
                 RepeatInterval = income.RepeatInterval.ToString(),
-                Notes = income.Notes
             };
         }
 
