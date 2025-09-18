@@ -3,23 +3,72 @@
     <div class="w-75">
       <h3>Sign Up</h3>
       <div class=" border-bottom border-success border-5 w-50 rounded-5 mb-4"></div>
-      <form>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
         <div class="mb-3">
           <label class="form-label">Name</label>
-          <input type="text" class="form-control shadow-sm" placeholder="Enter your email">
+
+          <input type="text" class="form-control shadow-sm" placeholder="Enter your email" formControlName="name">
+
+          @if (signupForm.get('name')?.touched && signupForm.get('name')?.invalid) {
+          <div class="text-danger">
+            @if (signupForm.get('name')?.errors?.['required']) {
+            <small>Name is required</small>
+            }
+            @if (signupForm.get('name')?.errors?.['minlength']) {
+            <small>Name must be at least 3 characters</small>
+            }
+            @if (signupForm.get('name')?.errors?.['maxlength']) {
+            <small>Name can't be more than 30 characters</small>
+            }
+            @if (signupForm.get('name')?.errors?.['pattern']) {
+            <small>Only alphanumeric characters are allowed</small>
+            }
+          </div>
+          }
+
         </div>
+
         <div class="mb-3">
           <label class="form-label">Email</label>
-          <input type="email" class="form-control shadow-sm" placeholder="Enter your email">
+
+          <input type="email" class="form-control shadow-sm" placeholder="Enter your email" formControlName="email">
+
+          @if (signupForm.get('email')?.touched && signupForm.get('email')?.invalid) {
+          <div class="text-danger">
+            @if (signupForm.get('email')?.errors?.['required']) {
+            <small>Email is required</small>
+            }
+            @if (signupForm.get('email')?.errors?.['email']) {
+            <small>Enter a valid email</small>
+            }
+          </div>
+          }
         </div>
+
         <div class="mb-3">
           <label class="form-label">Password</label>
-          <input type="password" class="form-control shadow-sm" placeholder="Enter your password">
+
+          <input type="password" class="form-control shadow-sm" placeholder="Enter your password"
+            formControlName="password">
+            
+          @if (signupForm.get('password')?.touched && signupForm.get('password')?.invalid) {
+            <div class="text-danger">
+              @if (signupForm.get('password')?.errors?.['required']) {
+                <small>Password is required</small>
+              }
+              @if (signupForm.get('password')?.errors?.['minlength']) {
+                <small>Password must be at least 4 characters</small>
+              }
+            </div>
+          }
+
         </div>
+
         <button type="submit" class="btn btn-success bg-gradient bg-opacity-10 w-100 shadow-lg">Register</button>
       </form>
       <div class="text-center mt-3">
-        <small>Already have an account? <a routerLink="/log-in">Login</a></small>
+        <small>Already have an account? <a routerLink="/">Login</a></small>
       </div>
     </div>
   </article>

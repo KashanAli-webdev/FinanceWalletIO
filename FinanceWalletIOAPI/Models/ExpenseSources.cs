@@ -10,7 +10,7 @@ namespace FinanceWalletIOAPI.Models
 
         public string UserId { get; set; } = null!;
 
-        [Required]
+        [Required, EnumDataType(typeof(ExpenseStreams))]
         public ExpenseStreams ExpenseType { get; set; }
 
         [StringLength(30)]
@@ -19,7 +19,7 @@ namespace FinanceWalletIOAPI.Models
         [Required]
         public bool AutoRepeat { get; set; }  // Indicates if it's a repeating income
 
-        [EnumDataType(typeof(TimeInterval))]
+        [Required, EnumDataType(typeof(TimeInterval))]
         public TimeInterval RepeatInterval { get; set; }
 
         [StringLength(500)]

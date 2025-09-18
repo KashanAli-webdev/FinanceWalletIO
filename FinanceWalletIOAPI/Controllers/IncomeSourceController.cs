@@ -21,16 +21,28 @@ namespace FinanceWalletIOAPI.Controllers
             _resServ = resServ;
         }
 
+
         [HttpGet]
-        public async Task<IActionResult> GetList()
+        public async Task<IActionResult> GetList([FromQuery] int pageNum)
         {
-            var list = await _incomeRepo.GetAllAsync();
+            var res = await _incomeRepo.GetAllAsync(pageNum);
 
-            if (list.OfType<ResponseDto>().Any(r => r.Status == false))
-                return Unauthorized(list);
+            if (res is ResponseDto resDto && !resDto.Status)  // Check if res is ResponseDto than assign a new variable(dto) to the res.
+                return _resServ.HttpRes(this, resDto);
 
-            return Ok(list);
+            return Ok(res);
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetList([FromQuery] int pageNum)
+        //{
+        //    var list = await _incomeRepo.GetAllAsync(pageNum);
+
+        //    if (list.OfType<ResponseDto>().Any(r => r.Status == false))
+        //        return Unauthorized(list);
+
+        //    return Ok(list);
+        //}
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)

@@ -1,11 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IncomeSourceService } from '../../../core/services/income-source.service';
+import { IncomeDetailsDto } from '../../../core/models/income.model';
 
 @Component({
   selector: 'app-income-details',
-  imports: [],
   templateUrl: './income-details.html',
-  styleUrl: './income-details.css'
+  styleUrls: ['./income-details.css']
 })
 export class IncomeDetails {
+  @Input() id!: string;
+  service = inject(IncomeSourceService);
+  modalService = inject(NgbModal);
 
+  dto: IncomeDetailsDto = {
+    incomeType: '',
+    name: '',
+    autoRepeat: false,
+    repeatInterval: '',
+    notes: '',
+    createdAt: new Date()
+  };
+
+  openModal(content: any) {
+    this.GetDetails(() => {
+      this.modalService.open(content, { size: 'md', centered: false });
+    });
+  }
+
+  GetDetails(callback?: () => void) {
+    this.service.GetById(this.id).subscribe({
+      next: (res) => {
+        this.dto = res;
+        console.log(this.id, this.dto, 'loaded');
+        if (callback) callback();
+      },
+      error: err => {
+        console.error("Failed to fetch details", err.error.errors);
+      }
+    });
+  }
 }

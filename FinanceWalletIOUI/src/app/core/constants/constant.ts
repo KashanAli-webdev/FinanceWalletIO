@@ -1,4 +1,8 @@
 export const Constant = {
+  KEY_NAME: {
+    TOKEN_KEY: 'tokenKey',
+  },
+
   MODULE_NAME: {
     AUTH: 'Auth/',
     INCOME_SOURCE: 'IncomeSource',

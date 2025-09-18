@@ -10,17 +10,47 @@
     <div class="w-75">
       <h3>Sign In</h3>
       <div class=" border-bottom border-primary border-5 w-50 rounded-5 mb-4"></div>
-      <form>
+
+      <form [formGroup]="loginForm" (ngSubmit)="OnSubmit()">
         <div class="mb-3">
           <label class="form-label">Email</label>
-          <input type="email" class="form-control shadow-sm" placeholder="Enter your email">
+
+          <input type="email" class="form-control shadow-sm" placeholder="Enter your email" formControlName="email">
+
+          @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+          <div class="text-danger">
+            @if (loginForm.get('email')?.errors?.['required']) {
+            <small>Email is required</small>
+            }
+            @if (loginForm.get('email')?.errors?.['email']) {
+            <small>Enter a valid email</small>
+            }
+          </div>
+          }
+
         </div>
+
         <div class="mb-3">
           <label class="form-label">Password</label>
-          <input type="password" class="form-control shadow-sm" placeholder="Enter your password">
+
+          <input type="password" class="form-control shadow-sm" placeholder="Enter your password"
+            formControlName="password">
+
+          @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+            <div class="text-danger">
+              @if (loginForm.get('password')?.errors?.['required']) {
+                <small>Password is required</small>
+              }
+              @if (loginForm.get('password')?.errors?.['minlength']) {
+                <small>Password must be at least 4 characters</small>
+              }
+            </div>
+          }
+
         </div>
         <button type="submit" class="btn btn-primary bg-gradient bg-opacity-10 w-100 shadow-lg">Login</button>
       </form>
+
       <div class="text-center mt-3">
         <small>Don't have an account? <a routerLink="/sign-up">Register</a></small>
       </div>

@@ -24,20 +24,20 @@ namespace FinanceWalletIOAPI.DTOs
 
     public sealed class CreateIncomeDto
     {
-        [Required] public IncomeStreams IncomeType { get; set; }
+        [Required, EnumDataType(typeof(IncomeStreams))] public IncomeStreams IncomeType { get; set; }
         [Required, StringLength(30)] public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')
         [Required] public bool AutoRepeat { get; set; }  // Indicates if it's a repeating income        
-        [EnumDataType(typeof(TimeInterval))] public TimeInterval RepeatInterval { get; set; } = 0;        
+        [Required, EnumDataType(typeof(TimeInterval))] public TimeInterval RepeatInterval { get; set; }   
         [StringLength(500)] public string? Notes { get; set; }
     }
 
     public sealed class UpdateIncomeDto
     {
         [Required] public Guid Id { get; set; }        
-        [Required] public IncomeStreams IncomeType { get; set; }        
+        [Required, EnumDataType(typeof(IncomeStreams))] public IncomeStreams IncomeType { get; set; }        
         [Required, StringLength(30)] public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')        
         [Required] public bool AutoRepeat { get; set; }  // Indicates if it's a repeating income        
-        [EnumDataType(typeof(TimeInterval))] public TimeInterval RepeatInterval { get; set; }        
+        [Required, EnumDataType(typeof(TimeInterval))] public TimeInterval RepeatInterval { get; set; }        
         [StringLength(500)] public string? Notes { get; set; }
     }
 }

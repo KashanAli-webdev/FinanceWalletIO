@@ -10,9 +10,9 @@ export enum IncomeStreams {
 export enum TimeInterval {
   None = 0,
   Daily = 1,
-  Weekly = 7,
-  Monthly = 30,
-  Annually = 365
+  Weekly = 2,
+  Monthly = 3,
+  Annually = 4
 }
 
 export enum ExpenseStreams {
@@ -37,17 +37,4 @@ export enum ExpenseStreams {
   Productivity = 18,
   Subscriptions = 19,
   Miscellaneous = 20
-}
-
-export enum ResCode {
-  OK = 200,
-  BadRequest = 400,
-  Unauthorized = 401,
-  Forbidden = 403,
-  NotFound = 404,
-  Conflict = 409,
-  InternalServerError = 500,
-  NotImplemented = 501,
-  BadGateway = 502,
-  ServiceUnavailable = 503
 }

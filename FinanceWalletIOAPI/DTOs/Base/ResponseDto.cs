@@ -2,7 +2,7 @@
 
 namespace FinanceWalletIOAPI.DTOs.Base
 {
-    public class ResponseDto : IApiResult
+    public sealed class ResponseDto : IApiResult
     {
         public ResCode Code { get; set; }
         public bool Status { get; set; }

@@ -25,7 +25,7 @@ namespace FinanceWalletIOAPI.DTOs
 
     public sealed class CreateExpenseDto
     {
-        [Required] public ExpenseStreams ExpenseType { get; set; }
+        [Required, EnumDataType(typeof(ExpenseStreams))] public ExpenseStreams ExpenseType { get; set; }
         [Required, StringLength(30)] public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')
         [Required] public bool AutoRepeat { get; set; }  // Indicates if it's a repeating income        
         [EnumDataType(typeof(TimeInterval))] public TimeInterval RepeatInterval { get; set; } = 0;
@@ -35,7 +35,7 @@ namespace FinanceWalletIOAPI.DTOs
     public sealed class UpdateExpenseDto
     {
         [Required] public Guid Id { get; set; }
-        [Required] public ExpenseStreams ExpenseType { get; set; }
+        [Required, EnumDataType(typeof(ExpenseStreams))] public ExpenseStreams ExpenseType { get; set; }
         [Required, StringLength(30)] public string Name { get; set; } = null!;  // Custom label for the source (e.g., 'Upwork')        
         [Required] public bool AutoRepeat { get; set; }  // Indicates if it's a repeating income        
         [EnumDataType(typeof(TimeInterval))] public TimeInterval RepeatInterval { get; set; }

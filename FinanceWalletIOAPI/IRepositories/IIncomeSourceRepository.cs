@@ -1,12 +1,14 @@
 ﻿using FinanceWalletIOAPI.DTOs;
 using FinanceWalletIOAPI.DTOs.Base;
 using FinanceWalletIOAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceWalletIOAPI.IRepositories
 {
     public interface IIncomeSourceRepository
     {
-        public Task<IEnumerable<IApiResult>> GetAllAsync();
+        public Task<IApiResult> GetAllAsync(int pageNum);
+        //public Task<IEnumerable<IApiResult>> GetAllAsync(int pageNum);
         public Task<IApiResult> GetByIdAsync(Guid id);
         public Task<ResponseDto> CreateAsync(CreateIncomeDto dto);
         public Task<ResponseDto> UpdateAsync(Guid id, UpdateIncomeDto dto);

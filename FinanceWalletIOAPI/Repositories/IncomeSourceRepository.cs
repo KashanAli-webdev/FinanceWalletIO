@@ -28,14 +28,43 @@ namespace FinanceWalletIOAPI.Repositories
             _resServ = resServ;
         }
 
-        public async Task<IEnumerable<IApiResult>> GetAllAsync()
+        public async Task<IApiResult> GetAllAsync(int pageNum)
         {
             if (_currentUserServ.IsUserIdEmpty)
-                return new List<ResponseDto> { _resServ.UnAuthUserRes() };
-            
-            return await _context.IncomeSources.Where(i => i.UserId == _currentUserServ.UserId)
-                .AsNoTracking().Select(i => _dtoMapper.ListMap(i)).ToListAsync();
+                return _resServ.UnAuthUserRes();
+
+            if (pageNum < 1) pageNum = 1; // Prevent negative offset
+
+            var baseQuery = _context.IncomeSources
+                .Where(i => i.UserId == _currentUserServ.UserId)
+                .AsNoTracking();
+
+            int pageSize = 2;
+            var totalCount = await baseQuery.CountAsync();
+
+            var dtos = await baseQuery
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .Select(i => _dtoMapper.ListMap(i))
+                .ToListAsync();
+
+            return new PaginationDto
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNum,
+                PageSize = pageSize,
+                DtoList = dtos
+            };
         }
+
+        //public async Task<IEnumerable<IApiResult>> GetAllAsync()
+        //{
+        //    if (_currentUserServ.IsUserIdEmpty)
+        //        return new List<ResponseDto> { _resServ.UnAuthUserRes() };
+
+        //    return await _context.IncomeSources.Where(i => i.UserId == _currentUserServ.UserId)
+        //        .AsNoTracking().Select(i => _dtoMapper.ListMap(i)).ToListAsync();
+        //}
 
         public async Task<IApiResult> GetByIdAsync(Guid id)
         {

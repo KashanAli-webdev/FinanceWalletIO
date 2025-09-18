@@ -7,6 +7,13 @@ export interface IncomeListDto {
   repeatInterval: string;
 }
 
+export interface PaginationDto {
+  totalCount: number;
+  pageNumber: number;
+  pageSize: number;
+  dtoList: IncomeListDto[];
+}
+
 export interface IncomeDetailsDto {
   incomeType: string;
   name: string;

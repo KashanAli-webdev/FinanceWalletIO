@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ToasterService } from '../../../core/services/toaster.service';
 
 @Component({
   selector: 'app-alert-popup',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './alert-popup.css'
 })
 export class AlertPopup {
-
+  toaster = inject(ToasterService);
 }

@@ -1,1 +1,7 @@
-<p>alert-popup works!</p>
+@if (toaster.toast.active) {
+<div class="position-fixed top-0 end-0 mt-3 me-3 z-3 w-25 alert alert-{{toaster.toast.res}} alert-dismissible fade show small shadow" role="alert">
+  <strong>{{ toaster.toast.res === 'danger' ? 'Error!' : 'Success!' }}</strong>
+  {{ toaster.toast.msg }}
+  <button type="button" class="btn-close" aria-label="Close" (click)="toaster.toast.active = false"></button>
+</div>
+}

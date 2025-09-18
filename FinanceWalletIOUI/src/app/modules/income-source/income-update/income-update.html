@@ -1,56 +1,96 @@
-<button class="btn btn-warning bg-gradient bg-opacity-10 px-3" data-bs-toggle="modal" data-bs-target="#updateModal">
-  <i class="bi bi-pencil-square"></i></button>
+<button type="button" class="btn btn-warning bg-gradient bg-opacity-10 px-3" (click)="openModal(updateModal)">
+  <i class="bi bi-pencil-square"></i>
+</button>
 
-<div class="modal fade" id="updateModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      
-      <div class="modal-header bg-warning bg-gradient shadow-sm">
-        <h5 class="modal-title w-100 fw-bold text-light">Update Income</h5>
-      </div>
-
-      <div class="modal-body">
-        <form class="d-flex flex-column gap-1 text-start">
-
-          <div>
-            <label class="form-label">Income Type</label>
-            <select class="form-select">
-              <option selected disabled>Choose type...</option>
-              <option>Salary</option>
-              <option>Business</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="form-label">Name</label>
-            <input type="text" class="form-control">
-          </div>
-
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="autoRepeat">
-            <label class="form-check-label" for="autoRepeat">Auto Repeat</label>
-          </div>
-
-          <div>
-            <label class="form-label">Repeat Interval</label>
-            <select class="form-select">
-              <option selected disabled>Choose type...</option>
-              <option>Weekly</option>
-              <option>Monthly</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="form-label">Notes</label>
-            <textarea class="form-control"></textarea>
-          </div>
-        </form>
-      </div>
-
-      <div class="modal-footer bg-warning-subtle bg-gradient border-warning-subtle">
-        <button class="btn btn-secondary shadow-sm" data-bs-dismiss="modal">Cancel</button>
-        <button class="btn btn-warning bg-gradient bg-opacity-50 shadow-sm" data-bs-dismiss="modal">Update</button>
-      </div>
-    </div>
+<ng-template #updateModal let-modal>
+  <div class="modal-header bg-warning bg-gradient shadow-sm">
+    <h5 class="modal-title w-100 fw-bold text-light">Update Income</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
   </div>
-</div>
+
+  <div class="modal-body">
+    <form class="d-flex flex-column gap-1 text-start" [formGroup]="incomeForm">
+
+      <div>
+        <label class="form-label">Income Type</label>
+        <select class="form-select" formControlName="incomeType" [value]="incomeForm.value.incomeType">
+          <option value="" disabled selected>Choose type...</option>
+          @for (income of incomeStreams; track $index) {
+          <option [value]="$index">{{ income }}</option>
+          }
+        </select>
+
+        @if (incomeForm.get('incomeType')?.touched && incomeForm.get('incomeType')?.invalid) {
+        <div class="text-danger">
+          @if (incomeForm.get('incomeType')?.errors?.['required']) {
+          <small>Income type is required</small>
+          }
+        </div>
+        }
+      </div>
+
+      <div>
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" formControlName="name">
+
+        @if (incomeForm.get('name')?.touched && incomeForm.get('name')?.invalid) {
+        <div class="text-danger">
+          @if (incomeForm.get('name')?.errors?.['required']) {
+          <small>Name is required</small>
+          }
+          @if (incomeForm.get('name')?.errors?.['minlength']) {
+          <small>Name must be at least 3 characters</small>
+          }
+          @if (incomeForm.get('name')?.errors?.['maxlength']) {
+          <small>Name can't be more than 30 characters</small>
+          }
+          @if (incomeForm.get('name')?.errors?.['pattern']) {
+          <small>Only alphanumeric characters are allowed</small>
+          }
+        </div>
+        }
+      </div>
+
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="autoRepeat" formControlName="autoRepeat">
+        <label class="form-check-label" for="autoRepeat">Auto Repeat</label>
+      </div>
+
+      <div>
+        <label class="form-label">Repeat Interval</label>
+        <select class="form-select" formControlName="repeatInterval">
+          <option value="" disabled selected>Choose interval...</option>
+          @for (interval of timeIntervals; track $index) {
+          <option [value]="$index">{{ interval }}</option>
+          }
+        </select>
+
+        @if (incomeForm.get('repeatInterval')?.touched && incomeForm.get('repeatInterval')?.invalid) {
+        <div class="text-danger">
+          @if (incomeForm.get('repeatInterval')?.errors?.['required']) {
+          <small>Repeat interval is required</small>
+          }
+        </div>
+        }
+      </div>
+
+      <div>
+        <label class="form-label">Notes</label>
+        <textarea class="form-control" formControlName="notes"></textarea>
+
+        @if (incomeForm.get('notes')?.touched && incomeForm.get('notes')?.invalid) {
+        <div class="text-danger">
+          @if (incomeForm.get('notes')?.errors?.['maxlength']) {
+          <small>Notes cannot exceed 500 characters</small>
+          }
+        </div>
+        }
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer bg-warning-subtle bg-gradient border-warning-subtle">
+    <button class="btn btn-secondary shadow-sm" (click)="modal.dismiss()">Cancel</button>
+    <button class="btn btn-warning bg-gradient bg-opacity-50 shadow-sm" (click)="onSubmit(modal)">Update</button>
+  </div>
+</ng-template>

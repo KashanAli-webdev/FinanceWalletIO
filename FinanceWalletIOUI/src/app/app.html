@@ -1,3 +1,4 @@
+@if (hasToken) {
 <div class="d-flex flex-column vw-100 min-vh-100">
   <app-navbar />
 
@@ -11,6 +12,8 @@
 
   <app-footer />
 </div>
-
-
-<!-- <router-outlet /> -->
+}
+@else {
+  <router-outlet />
+}
+<app-alert-popup />
