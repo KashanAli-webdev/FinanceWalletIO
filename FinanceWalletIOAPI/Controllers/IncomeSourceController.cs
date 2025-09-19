@@ -21,7 +21,6 @@ namespace FinanceWalletIOAPI.Controllers
             _resServ = resServ;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> GetList([FromQuery] int pageNum)
         {
@@ -32,17 +31,6 @@ namespace FinanceWalletIOAPI.Controllers
 
             return Ok(res);
         }
-
-        //[HttpGet]
-        //public async Task<IActionResult> GetList([FromQuery] int pageNum)
-        //{
-        //    var list = await _incomeRepo.GetAllAsync(pageNum);
-
-        //    if (list.OfType<ResponseDto>().Any(r => r.Status == false))
-        //        return Unauthorized(list);
-
-        //    return Ok(list);
-        //}
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)

@@ -48,23 +48,14 @@ namespace FinanceWalletIOAPI.Repositories
                 .Select(i => _dtoMapper.ListMap(i))
                 .ToListAsync();
 
-            return new PaginationDto
+            return new PaginationDto<IncomeListDto> // Pass Generic type
             {
+                DtoList = dtos,
                 TotalCount = totalCount,
                 PageNumber = pageNum,
-                PageSize = pageSize,
-                DtoList = dtos
+                PageSize = pageSize
             };
         }
-
-        //public async Task<IEnumerable<IApiResult>> GetAllAsync()
-        //{
-        //    if (_currentUserServ.IsUserIdEmpty)
-        //        return new List<ResponseDto> { _resServ.UnAuthUserRes() };
-
-        //    return await _context.IncomeSources.Where(i => i.UserId == _currentUserServ.UserId)
-        //        .AsNoTracking().Select(i => _dtoMapper.ListMap(i)).ToListAsync();
-        //}
 
         public async Task<IApiResult> GetByIdAsync(Guid id)
         {
