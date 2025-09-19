@@ -22,20 +22,19 @@ export class IncomeHome {
 
   dto: IncomeListDto[] = [];
   totalCount = 0;
-  pageNumber = 1;
+  pageNum = 1;
   pageSize = 2;
 
   ngOnInit(): void {
-    this.GetList(this.pageNumber);
+    this.GetList(this.pageNum);
   }
 
   GetList(page: number): void {
-    this.service.GetList(page).subscribe({
+    this.service.GetList(page, this.pageSize).subscribe({
       next: (res) => {
         this.dto = res.dtoList;
         this.totalCount = res.totalCount;
-        this.pageNumber = res.pageNumber;
-        this.pageSize = res.pageSize;
+        this.pageNum = res.pageNum;
       }
     });
   }
@@ -60,7 +59,7 @@ export class IncomeHome {
   Delete(id: string): void {
     this.service.Delete(id).subscribe({
       next: (res: any) => {
-        this.GetList(this.pageNumber);
+        this.GetList(this.pageNum);
         this.toaster.TriggerNotify(res.msg, 'success');
       },
       error: err => {

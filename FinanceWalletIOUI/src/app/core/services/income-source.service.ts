@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Constant } from '../constants/constant';
-import { CreateIncomeDto, IncomeDetailsDto, IncomeListDto, PaginationDto, UpdateIncomeDto } from '../models/income.model';
+import { CreateIncomeDto, IncomeDetailsDto, IncomeListDto, UpdateIncomeDto } from '../models/income.model';
+import { PaginationDto } from '../models/pagination.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,10 @@ export class IncomeSourceService {
   constructor(private http: HttpClient) { }
   private baseUrl = environment.apiUrl + Constant.MODULE_NAME.INCOME_SOURCE;
 
-  GetList(pageNum: number) {
-    return this.http.get<PaginationDto>(`${this.baseUrl}?pageNum=${pageNum}`);
+  GetList(pageNum: number, pageSize: number) {
+    return this.http.get<PaginationDto<IncomeListDto>>
+      (`${this.baseUrl}?pageNum=${pageNum}&pageSize=${pageSize}`);
   }
-
-  // GetList() {
-  //   return this.http.get<IncomeListDto[]>(this.baseUrl);
-  // }
 
   GetById(id: string) {
     return this.http.get<IncomeDetailsDto>(`${this.baseUrl}/${id}`);

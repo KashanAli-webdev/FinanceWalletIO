@@ -22,9 +22,9 @@ namespace FinanceWalletIOAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] int pageNum)
+        public async Task<IActionResult> GetList([FromQuery] int pageNum, int pageSize)
         {
-            var res = await _incomeRepo.GetAllAsync(pageNum);
+            var res = await _incomeRepo.GetAllAsync(pageNum, pageSize);
 
             if (res is ResponseDto resDto && !resDto.Status)  // Check if res is ResponseDto than assign a new variable(dto) to the res.
                 return _resServ.HttpRes(this, resDto);

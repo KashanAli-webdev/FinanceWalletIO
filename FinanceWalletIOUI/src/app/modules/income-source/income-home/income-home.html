@@ -9,7 +9,7 @@
       data-bs-target="#filterBar">
       <i class="bi bi-funnel"></i> Filters
     </button>
-    <app-income-create (event)="GetList(pageNumber)" />
+    <app-income-create (event)="GetList(pageNum)" />
   </div>
 
   <div id="filterBar" class="collapse mb-2">
@@ -52,13 +52,13 @@
       <tbody>
         @for (income of dto; track $index) {
         <tr>
-          <td>{{ (pageNumber - 1) * pageSize + ($index + 1) }}</td>
+          <td>{{ (pageNum - 1) * pageSize + ($index + 1) }}</td>
           <td>{{ income.incomeType }}</td>
           <td>{{ income.name }}</td>
           <td>{{income.repeatInterval}}</td>
           <td class="d-flex gap-1 justify-content-center">
             <app-income-details [id]="income.id" />
-            <app-income-update [id]="income.id" (event)="GetList(pageNumber)" />
+            <app-income-update [id]="income.id" (event)="GetList(pageNum)" />
             <button type="button" class="btn btn-sm btn-danger bg-gradient px-3" (click)="Delete(income.id)">
               <i class="bi bi-trash"></i>
             </button>
@@ -69,7 +69,7 @@
     </table>
   </div>
   
-  <ngb-pagination [collectionSize]="totalCount" [(page)]="pageNumber" [pageSize]="pageSize" 
+  <ngb-pagination [collectionSize]="totalCount" [(page)]="pageNum" [pageSize]="pageSize" 
     [boundaryLinks]="true" (pageChange)="onPageChange($event)" class="pagination justify-content-end mt-5">
     <ng-template ngbPaginationPages let-page let-pages="pages">
       @if (pages.length > 0) {
@@ -77,7 +77,7 @@
         <div class="mb-3 d-flex flex-nowrap px-2">
           <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Page</label>
           <input #i type="text" inputmode="numeric" pattern="[0-9]*" class="form-control custom-pages-input"
-            id="paginationInput" [value]="pageNumber" (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
+            id="paginationInput" [value]="pageNum" (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
             aria-labelledby="paginationInputLabel paginationDescription" style="width: 2.5rem" />
           <span id="paginationDescription" class="col-form-label text-nowrap px-2">
             of {{ pages.length }}

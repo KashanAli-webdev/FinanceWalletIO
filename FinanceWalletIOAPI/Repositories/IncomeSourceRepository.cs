@@ -28,7 +28,7 @@ namespace FinanceWalletIOAPI.Repositories
             _resServ = resServ;
         }
 
-        public async Task<IApiResult> GetAllAsync(int pageNum)
+        public async Task<IApiResult> GetAllAsync(int pageNum, int pageSize)
         {
             if (_currentUserServ.IsUserIdEmpty)
                 return _resServ.UnAuthUserRes();
@@ -39,7 +39,6 @@ namespace FinanceWalletIOAPI.Repositories
                 .Where(i => i.UserId == _currentUserServ.UserId)
                 .AsNoTracking();
 
-            int pageSize = 2;
             var totalCount = await baseQuery.CountAsync();
 
             var dtos = await baseQuery
@@ -52,7 +51,7 @@ namespace FinanceWalletIOAPI.Repositories
             {
                 DtoList = dtos,
                 TotalCount = totalCount,
-                PageNumber = pageNum,
+                PageNum = pageNum,
                 PageSize = pageSize
             };
         }
