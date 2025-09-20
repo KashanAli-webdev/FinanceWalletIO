@@ -3,9 +3,11 @@ using FinanceWalletIOAPI.DTOs;
 using FinanceWalletIOAPI.DTOs.Base;
 using FinanceWalletIOAPI.DTOs.Enums;
 using FinanceWalletIOAPI.DTOs.Mappers;
+using FinanceWalletIOAPI.DTOs.Requests;
 using FinanceWalletIOAPI.IRepositories;
 using FinanceWalletIOAPI.IServices;
 using FinanceWalletIOAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceWalletIOAPI.Repositories
@@ -28,22 +30,28 @@ namespace FinanceWalletIOAPI.Repositories
             _resServ = resServ;
         }
 
-        public async Task<IApiResult> GetAllAsync(int pageNum, int pageSize)
+        public async Task<IApiResult> GetAllAsync(ListQueryParams<IncomeStreams> queryParams)
         {
             if (_currentUserServ.IsUserIdEmpty)
                 return _resServ.UnAuthUserRes();
 
-            if (pageNum < 1) pageNum = 1; // Prevent negative offset
+            if (queryParams.PageNum < 1) queryParams.PageNum = 1; // Prevent negative offset
 
             var baseQuery = _context.IncomeSources
                 .Where(i => i.UserId == _currentUserServ.UserId)
                 .AsNoTracking();
 
+            if (queryParams.Category.HasValue)
+                baseQuery = baseQuery.Where(i => i.IncomeType == queryParams.Category);
+
+            if (queryParams.Interval.HasValue)
+                baseQuery = baseQuery.Where(i => i.RepeatInterval == queryParams.Interval);
+
             var totalCount = await baseQuery.CountAsync();
 
             var dtos = await baseQuery
-                .Skip((pageNum - 1) * pageSize)
-                .Take(pageSize)
+                .Skip((queryParams.PageNum - 1) * queryParams.PageSize)
+                .Take(queryParams.PageSize)
                 .Select(i => _dtoMapper.ListMap(i))
                 .ToListAsync();
 
@@ -51,8 +59,8 @@ namespace FinanceWalletIOAPI.Repositories
             {
                 DtoList = dtos,
                 TotalCount = totalCount,
-                PageNum = pageNum,
-                PageSize = pageSize
+                PageNum = queryParams.PageNum,
+                PageSize = queryParams.PageSize
             };
         }
 

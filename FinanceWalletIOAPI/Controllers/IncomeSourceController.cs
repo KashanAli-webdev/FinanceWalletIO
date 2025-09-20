@@ -1,5 +1,7 @@
 ﻿using FinanceWalletIOAPI.DTOs;
 using FinanceWalletIOAPI.DTOs.Base;
+using FinanceWalletIOAPI.DTOs.Enums;
+using FinanceWalletIOAPI.DTOs.Requests;
 using FinanceWalletIOAPI.IRepositories;
 using FinanceWalletIOAPI.IServices;
 using Microsoft.AspNetCore.Authorization;
@@ -22,9 +24,9 @@ namespace FinanceWalletIOAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetList([FromQuery] int pageNum, int pageSize)
+        public async Task<IActionResult> GetList([FromQuery] ListQueryParams<IncomeStreams> queryParams)
         {
-            var res = await _incomeRepo.GetAllAsync(pageNum, pageSize);
+            var res = await _incomeRepo.GetAllAsync(queryParams);
 
             if (res is ResponseDto resDto && !resDto.Status)  // Check if res is ResponseDto than assign a new variable(dto) to the res.
                 return _resServ.HttpRes(this, resDto);

@@ -13,29 +13,38 @@
   </div>
 
   <div id="filterBar" class="collapse mb-2">
-    <div class="d-flex flex-wrap gap-2 align-items-end">
+    <form class="d-flex flex-wrap gap-2 align-items-end" [formGroup]="filterForm">
       <div>
         <label class="form-label">Category</label>
-        <select class="form-select" formControlName="incomeType">
-          <option value="" disabled selected>Choose type...</option>
+        <select class="form-select" formControlName="category">
+          <option [ngValue]="null" selected>Choose type...</option>
           @for (income of incomeStreams; track $index) {
-          <option [value]="$index">{{ income }}</option>
+          <option [ngValue]="$index">{{ income }}</option>
+          }
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Time Interval</label>
+        <select class="form-select" formControlName="interval">
+          <option [ngValue]="null" selected>Choose interval...</option>
+          @for (interval of timeIntervals; track $index) {
+          <option [ngValue]="$index">{{ interval }}</option>
           }
         </select>
       </div>
       <div>
         <label class="form-label">From</label>
-        <input type="date" class="form-control">
+        <input type="date" class="form-control" formControlName="from">
       </div>
       <div>
         <label class="form-label">To</label>
-        <input type="date" class="form-control">
+        <input type="date" class="form-control" formControlName="to">
       </div>
       <div>
         <button class="btn btn-success bg-gradient bg-opacity-10 shadow-sm" data-bs-toggle="collapse"
-          data-bs-target="#filterBar">Apply</button>
+          data-bs-target="#filterBar" (click)="GetList(1)">Apply</button>
       </div>
-    </div>
+    </form>
   </div>
 
   <div class="table-responsive">
@@ -68,9 +77,9 @@
       </tbody>
     </table>
   </div>
-  
-  <ngb-pagination [collectionSize]="totalCount" [(page)]="pageNum" [pageSize]="pageSize" 
-    [boundaryLinks]="true" (pageChange)="onPageChange($event)" class="pagination justify-content-end mt-5">
+
+  <ngb-pagination [collectionSize]="totalCount" [(page)]="pageNum" [pageSize]="pageSize" [boundaryLinks]="true"
+    (pageChange)="onPageChange($event)" class="pagination justify-content-end mt-5">
     <ng-template ngbPaginationPages let-page let-pages="pages">
       @if (pages.length > 0) {
       <li class="ngb-custom-pages-item">
