@@ -41,6 +41,10 @@
         <input type="date" class="form-control" formControlName="to">
       </div>
       <div>
+        <button class="btn btn-primary bg-gradient bg-opacity-10 shadow-sm" data-bs-target="#filterBar"
+          (click)="this.filterForm.reset()">Clear</button>
+      </div>
+      <div>
         <button class="btn btn-success bg-gradient bg-opacity-10 shadow-sm" data-bs-toggle="collapse"
           data-bs-target="#filterBar" (click)="GetList(1)">Apply</button>
       </div>

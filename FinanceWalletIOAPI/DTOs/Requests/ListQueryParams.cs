@@ -8,5 +8,7 @@ namespace FinanceWalletIOAPI.DTOs.Requests
         public int PageSize { get; set; }
         public T? Category { get; set; }
         public TimeInterval? Interval { get; set; }
+        public DateTime? From { get; set; }
+        public DateTime? To { get; set; }
     }
 }

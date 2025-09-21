@@ -47,6 +47,12 @@ namespace FinanceWalletIOAPI.Repositories
             if (queryParams.Interval.HasValue)
                 baseQuery = baseQuery.Where(i => i.RepeatInterval == queryParams.Interval);
 
+            if (queryParams.From.HasValue)
+                baseQuery = baseQuery.Where(i => i.CreatedAt >= queryParams.From.Value);
+
+            if (queryParams.To.HasValue)
+                baseQuery = baseQuery.Where(i => i.CreatedAt <= queryParams.To.Value);
+
             var totalCount = await baseQuery.CountAsync();
 
             var dtos = await baseQuery

@@ -28,11 +28,11 @@ export class IncomeHome {
   totalCount = 0;
   pageNum = 1;
   pageSize = 2;
-  filterForm: FormGroup = new FormGroup ({
+  filterForm: FormGroup = new FormGroup({
     category: new FormControl<number | null>(null),
     interval: new FormControl<number | null>(null),
-    from: new FormControl(null),
-    to: new FormControl(null)
+    from: new FormControl<Date | null>(null),
+    to: new FormControl<Date | null>(null)
   });
 
   ngOnInit(): void {
@@ -44,7 +44,9 @@ export class IncomeHome {
       pageNum: page,
       pageSize: this.pageSize,
       category: this.filterForm.value.category,
-      interval: this.filterForm.value.interval
+      interval: this.filterForm.value.interval,
+      from: this.filterForm.value.from ? new Date(this.filterForm.value.from) : null,
+      to: this.filterForm.value.to ? new Date(this.filterForm.value.to) : null,
     };
 
     this.service.GetList(params).subscribe({

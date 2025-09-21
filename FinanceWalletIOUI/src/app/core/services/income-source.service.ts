@@ -20,7 +20,9 @@ export class IncomeSourceService {
         pageNum: params.pageNum,
         pageSize: params.pageSize,
         category: params.category ?? '',
-        interval: params.interval ?? ''
+        interval: params.interval ?? '',
+        from: params.from ? params.from.toISOString() : '',
+        to: params.to ? params.to.toISOString() : ''
       }
     });
   }
