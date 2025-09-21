@@ -13,9 +13,9 @@
       <div>
         <label class="form-label">Income Type</label>
         <select class="form-select" formControlName="incomeType">
-          <option value="" disabled selected>Choose type...</option>
+          <option [ngValue]="null" selected>Choose type...</option>
           @for (income of incomeStreams; track $index) {
-          <option [value]="$index">{{ income }}</option>
+          <option [ngValue]="$index">{{ income }}</option>
           }
         </select>
 
@@ -58,9 +58,9 @@
       <div>
         <label class="form-label">Repeat Interval</label>
         <select class="form-select" formControlName="repeatInterval">
-          <option value="" disabled selected>Choose interval...</option>
+          <option [ngValue]="null" selected>Choose interval...</option>
           @for (interval of timeIntervals; track $index) {
-          <option [value]="$index">{{ interval }}</option>
+          <option [ngValue]="$index">{{ interval }}</option>
           }
         </select>
 
