@@ -7,7 +7,6 @@ using FinanceWalletIOAPI.DTOs.Requests;
 using FinanceWalletIOAPI.IRepositories;
 using FinanceWalletIOAPI.IServices;
 using FinanceWalletIOAPI.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanceWalletIOAPI.Repositories
@@ -18,16 +17,19 @@ namespace FinanceWalletIOAPI.Repositories
         private readonly ICurrentUserService _currentUserServ;
         private readonly IncomeSourceDtoMapper _dtoMapper;
         private readonly IResponseService _resServ;
+        private readonly ParamDtoMapper _paramDtoMapper;
         public IncomeSourceRepository(
             AppDbContext context, 
             ICurrentUserService currentUserServ, 
             IncomeSourceDtoMapper incomeDtoMapper,
-            IResponseService resServ)
+            IResponseService resServ,
+            ParamDtoMapper paramDtoMapper)
         {
             _context = context;
             _currentUserServ = currentUserServ;
             _dtoMapper = incomeDtoMapper;
             _resServ = resServ;
+            _paramDtoMapper = paramDtoMapper;
         }
 
         public async Task<IApiResult> GetAllAsync(ListQueryParams<IncomeStreams> queryParams)
@@ -37,6 +39,22 @@ namespace FinanceWalletIOAPI.Repositories
 
             if (queryParams.PageNum < 1) queryParams.PageNum = 1; // Prevent negative offset
 
+            var baseQuery = IncomeListQuery(queryParams);
+            
+            var totalCount = await baseQuery.CountAsync();
+
+            var dtos = await baseQuery
+                .Skip((queryParams.PageNum - 1) * queryParams.PageSize)
+                .Take(queryParams.PageSize)
+                .Select(i => _dtoMapper.ListMap(i))
+                .ToListAsync();
+
+            return _paramDtoMapper.ParamMap(dtos, totalCount, queryParams.PageNum, queryParams.PageSize);
+        }
+
+        private IQueryable<IncomeSources> IncomeListQuery(
+            ListQueryParams<IncomeStreams> queryParams)
+        {
             var baseQuery = _context.IncomeSources
                 .Where(i => i.UserId == _currentUserServ.UserId)
                 .AsNoTracking();
@@ -53,21 +71,7 @@ namespace FinanceWalletIOAPI.Repositories
             if (queryParams.To.HasValue)
                 baseQuery = baseQuery.Where(i => i.CreatedAt <= queryParams.To.Value);
 
-            var totalCount = await baseQuery.CountAsync();
-
-            var dtos = await baseQuery
-                .Skip((queryParams.PageNum - 1) * queryParams.PageSize)
-                .Take(queryParams.PageSize)
-                .Select(i => _dtoMapper.ListMap(i))
-                .ToListAsync();
-
-            return new PaginationDto<IncomeListDto> // Pass Generic type
-            {
-                DtoList = dtos,
-                TotalCount = totalCount,
-                PageNum = queryParams.PageNum,
-                PageSize = queryParams.PageSize
-            };
+            return baseQuery;
         }
 
         public async Task<IApiResult> GetByIdAsync(Guid id)

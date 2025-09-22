@@ -54,7 +54,7 @@ export class IncomeCreate {
 
     this.service.Create(dto).subscribe({
       next: (res: any) => {
-        this.event.emit();        
+        this.event.emit();
         this.incomeForm.reset({  // reset the form values
           incomeType: null,
           name: '',
@@ -70,6 +70,5 @@ export class IncomeCreate {
         console.error("Create failed", err.error.errors)
       }
     });
-
   }
 }

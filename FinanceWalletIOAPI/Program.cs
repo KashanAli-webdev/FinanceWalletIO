@@ -26,6 +26,7 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IResponseService, ResponseService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<ParamDtoMapper>();
 // Income Module
 builder.Services.AddScoped<IncomeSourceDtoMapper>();
 builder.Services.AddScoped<IIncomeSourceRepository, IncomeSourceRepository>();
