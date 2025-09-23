@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FeaturesMenu } from "../features-menu/features-menu";
-import { NgClass } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
 import { Constant } from '../../../core/constants/constant';
 

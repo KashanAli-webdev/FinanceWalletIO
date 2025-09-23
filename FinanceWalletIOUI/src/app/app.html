@@ -1,19 +1,2 @@
-@if (hasToken) {
-<div class="d-flex flex-column vw-100 min-vh-100">
-  <app-navbar />
-
-  <main class="flex-fill m-2 overflow-hidden d-lg-flex flex-lg-row gap-lg-2">
-    <app-sidebar />
-
-    <section class="flex-fill rounded-3 overflow-y-auto">
-      <router-outlet />
-    </section>
-  </main>
-
-  <app-footer />
-</div>
-}
-@else {
-  <router-outlet />
-}
+<router-outlet />
 <app-alert-popup />

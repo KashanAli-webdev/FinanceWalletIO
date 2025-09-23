@@ -28,4 +28,20 @@ export class AuthService {
     const requestUrl = this.baseUrl + Constant.USER_REQUEST.LOGOUT;
     return this.http.post(requestUrl, null);
   }
+  
+  clearExpiredToken(): void {
+    const token = localStorage.getItem(Constant.KEY_NAME.TOKEN_KEY);
+    if (!token) return;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const expiry = payload.exp * 1000; // `exp` in seconds → ms
+      if (Date.now() >= expiry) {
+        localStorage.removeItem(Constant.KEY_NAME.TOKEN_KEY);
+      }
+    } catch {
+      // If JWT is corrupted, also remove it
+      localStorage.removeItem(Constant.KEY_NAME.TOKEN_KEY);
+    }
+  }
 }

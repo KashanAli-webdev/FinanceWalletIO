@@ -29,7 +29,7 @@ export class LogIn {
     this.service.SignIn(dto).subscribe({
       next: (res: any) => {
         localStorage.setItem(Constant.KEY_NAME.TOKEN_KEY, res.msg);
-        this.router.navigate(['/income-home']);
+        this.router.navigate(['/layout/income-home']);
       },
       error: (err) => {
         console.log(err);

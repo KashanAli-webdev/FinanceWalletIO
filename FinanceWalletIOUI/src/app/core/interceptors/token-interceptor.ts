@@ -27,4 +27,3 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   );
 
 };
-

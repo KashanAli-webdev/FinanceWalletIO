@@ -35,10 +35,6 @@ export class IncomeHome {
     to: new FormControl<Date | null>(null)
   });
 
-  get totalPages(): number {
-    return Math.ceil(this.totalCount / this.pageSize);
-  }
-
   ngOnInit(): void {
     this.GetList(this.pageNum);
   }
