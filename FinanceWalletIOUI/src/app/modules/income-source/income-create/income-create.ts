@@ -63,10 +63,10 @@ export class IncomeCreate {
           notes: ''
         });
         modal.close();
-        this.toaster.TriggerNotify(res.msg, 'success');
+        this.toaster.TriggerNotify(res.msg, true);
       },
       error: err => {
-        this.toaster.TriggerNotify(err.msg, 'danger');
+        this.toaster.TriggerNotify(err.error.msg, false);
         console.error("Create failed", err.error.errors)
       }
     });

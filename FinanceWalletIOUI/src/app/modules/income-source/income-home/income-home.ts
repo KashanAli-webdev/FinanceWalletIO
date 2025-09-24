@@ -75,10 +75,10 @@ export class IncomeHome {
     this.service.Delete(id).subscribe({
       next: (res: any) => {
         this.GetList(this.pageNum);
-        this.toaster.TriggerNotify(res.msg, 'success');
+        this.toaster.TriggerNotify(res.msg, true);
       },
       error: err => {
-        this.toaster.TriggerNotify(err.msg, 'success');
+        this.toaster.TriggerNotify(err.error.msg, false);
         console.error("Create failed", err.error.errors)
       }
     });

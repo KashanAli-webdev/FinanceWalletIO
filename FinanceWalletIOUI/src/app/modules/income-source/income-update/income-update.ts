@@ -74,10 +74,10 @@ export class IncomeUpdate {
       next: (res: any) => {
         this.event.emit();
         modal.close();
-        this.toaster.TriggerNotify(res.msg, 'success');
+        this.toaster.TriggerNotify(res.msg, true);
       },
       error: err => {
-        this.toaster.TriggerNotify(err.msg, 'success');
+        this.toaster.TriggerNotify(err.error.msg, false);
         console.error("Update failed", err.error.errors)
       }
     });

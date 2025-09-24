@@ -10,17 +10,17 @@ export class ToasterService {
     res: ''
   }
 
-  TriggerNotify(msg: string, res: string): void {
+  TriggerNotify(msg: string, res: boolean): void {
     this.toast.active = true;
     this.toast.msg = msg;
-    this.toast.res = res;
+    this.toast.res = res ? 'success' : 'danger';
 
     // reset after 3 seconds.
     setTimeout(() => {
       this.toast.active = false;
       this.toast.msg = '';
       this.toast.res = '';
-    }, 4000);
+    }, 5000);
   }
 
 }

@@ -24,6 +24,7 @@ export class IncomeDetails {
 
   openModal(content: any) {
     this.GetDetails(() => {
+      // modal doesnt open untill data loads
       this.modalService.open(content, { size: 'md', centered: false });
     });
   }
@@ -33,7 +34,7 @@ export class IncomeDetails {
       next: (res) => {
         this.dto = res;
         console.log(this.id, this.dto, 'loaded');
-        if (callback) callback();
+        if (callback) callback(); // make sure data load first then open modal.
       },
       error: err => {
         console.error("Failed to fetch details", err.error.errors);
