@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|d:\\web development\\dotnet core angular\\projects\\financewalletio\\financewalletioapi\\dtos\\base\\responsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|solutionrelative:financewalletioapi\\dtos\\base\\responsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|d:\\web development\\dotnet core angular\\projects\\financewalletio\\financewalletioapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|solutionrelative:financewalletioapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|d:\\web development\\dotnet core angular\\projects\\financewalletio\\financewalletioapi\\controllers\\incomesourcecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|solutionrelative:financewalletioapi\\controllers\\incomesourcecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|d:\\web development\\dotnet core angular\\projects\\financewalletio\\financewalletioapi\\repositories\\incometransactionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|solutionrelative:financewalletioapi\\repositories\\incometransactionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|d:\\web development\\dotnet core angular\\projects\\financewalletio\\financewalletioapi\\repositories\\incomesourcerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|solutionrelative:financewalletioapi\\repositories\\incomesourcerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|d:\\web development\\dotnet core angular\\projects\\financewalletio\\financewalletioapi\\dtos\\incometransactiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|solutionrelative:financewalletioapi\\dtos\\incometransactiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|d:\\web development\\dotnet core angular\\projects\\financewalletio\\financewalletioapi\\services\\responseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|solutionrelative:financewalletioapi\\services\\responseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|d:\\web development\\dotnet core angular\\projects\\financewalletio\\financewalletioapi\\models\\incometransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F56E6DE8-FC65-498C-BCF0-42F71A81824F}|FinanceWalletIOAPI\\FinanceWalletIOAPI.csproj|solutionrelative:financewalletioapi\\models\\incometransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -35,54 +35,51 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ResponseDto.cs",
-              "DocumentMoniker": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\DTOs\\Base\\ResponseDto.cs",
-              "RelativeDocumentMoniker": "FinanceWalletIOAPI\\DTOs\\Base\\ResponseDto.cs",
-              "ToolTip": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\DTOs\\Base\\ResponseDto.cs",
-              "RelativeToolTip": "FinanceWalletIOAPI\\DTOs\\Base\\ResponseDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Program.cs",
+              "RelativeDocumentMoniker": "FinanceWalletIOAPI\\Program.cs",
+              "ToolTip": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Program.cs",
+              "RelativeToolTip": "FinanceWalletIOAPI\\Program.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAswFwAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T10:12:59.422Z",
+              "WhenOpened": "2025-09-25T07:48:12.087Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ResponseService.cs",
-              "DocumentMoniker": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Services\\ResponseService.cs",
-              "RelativeDocumentMoniker": "FinanceWalletIOAPI\\Services\\ResponseService.cs",
-              "ToolTip": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Services\\ResponseService.cs",
-              "RelativeToolTip": "FinanceWalletIOAPI\\Services\\ResponseService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAA==",
+              "Title": "IncomeTransaction.cs",
+              "DocumentMoniker": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Models\\IncomeTransaction.cs",
+              "RelativeDocumentMoniker": "FinanceWalletIOAPI\\Models\\IncomeTransaction.cs",
+              "ToolTip": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Models\\IncomeTransaction.cs",
+              "RelativeToolTip": "FinanceWalletIOAPI\\Models\\IncomeTransaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T10:13:21.433Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-24T11:35:05.066Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "IncomeSourceRepository.cs",
-              "DocumentMoniker": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Repositories\\IncomeSourceRepository.cs",
-              "RelativeDocumentMoniker": "FinanceWalletIOAPI\\Repositories\\IncomeSourceRepository.cs",
-              "ToolTip": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Repositories\\IncomeSourceRepository.cs",
-              "RelativeToolTip": "FinanceWalletIOAPI\\Repositories\\IncomeSourceRepository.cs",
-              "ViewState": "AgIAAJIAAAAAAAAAAAAkwK4AAAAAAAAAAAAAAA==",
+              "Title": "IncomeTransactionDto.cs",
+              "DocumentMoniker": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\DTOs\\IncomeTransactionDto.cs",
+              "RelativeDocumentMoniker": "FinanceWalletIOAPI\\DTOs\\IncomeTransactionDto.cs",
+              "ToolTip": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\DTOs\\IncomeTransactionDto.cs",
+              "RelativeToolTip": "FinanceWalletIOAPI\\DTOs\\IncomeTransactionDto.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T10:11:00.659Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-24T11:36:23.763Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "IncomeSourceController.cs",
-              "DocumentMoniker": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Controllers\\IncomeSourceController.cs",
-              "RelativeDocumentMoniker": "FinanceWalletIOAPI\\Controllers\\IncomeSourceController.cs",
-              "ToolTip": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Controllers\\IncomeSourceController.cs",
-              "RelativeToolTip": "FinanceWalletIOAPI\\Controllers\\IncomeSourceController.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAkwFgAAAAAAAAAAAAAAA==",
+              "Title": "IncomeTransactionRepository.cs",
+              "DocumentMoniker": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Repositories\\IncomeTransactionRepository.cs",
+              "RelativeDocumentMoniker": "FinanceWalletIOAPI\\Repositories\\IncomeTransactionRepository.cs",
+              "ToolTip": "D:\\Web Development\\Dotnet Core Angular\\Projects\\FinanceWalletIO\\FinanceWalletIOAPI\\Repositories\\IncomeTransactionRepository.cs",
+              "RelativeToolTip": "FinanceWalletIOAPI\\Repositories\\IncomeTransactionRepository.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAQwDAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-24T10:07:26.003Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-24T11:33:19.222Z"
             }
           ]
         },

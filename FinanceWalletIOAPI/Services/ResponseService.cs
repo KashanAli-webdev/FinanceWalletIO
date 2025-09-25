@@ -43,7 +43,7 @@ namespace FinanceWalletIOAPI.Services
             {
                 Code = ResCode.Conflict,
                 Status = false,
-                Msg = $"This {objName} already exist!"
+                Msg = $"{objName} already exist!"
             };
         }
 

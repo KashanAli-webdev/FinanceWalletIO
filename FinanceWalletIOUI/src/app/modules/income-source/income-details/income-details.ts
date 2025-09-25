@@ -2,6 +2,7 @@ import { Component, Input, inject } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IncomeSourceService } from '../../../core/services/income-source.service';
 import { IncomeDetailsDto } from '../../../core/models/income.model';
+import { ToasterService } from '../../../core/services/toaster.service';
 
 @Component({
   selector: 'app-income-details',
@@ -12,6 +13,7 @@ export class IncomeDetails {
   @Input() id!: string;
   service = inject(IncomeSourceService);
   modalService = inject(NgbModal);
+    toaster = inject(ToasterService);
 
   dto: IncomeDetailsDto = {
     incomeType: '',
@@ -37,6 +39,7 @@ export class IncomeDetails {
         if (callback) callback(); // make sure data load first then open modal.
       },
       error: err => {
+        this.toaster.TriggerNotify(err.error.msg, false);
         console.error("Failed to fetch details", err.error.errors);
       }
     });

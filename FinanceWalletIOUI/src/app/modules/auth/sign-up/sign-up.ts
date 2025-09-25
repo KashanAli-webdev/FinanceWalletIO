@@ -4,6 +4,7 @@ import { ImportedModules } from '../../../shared/imports/imports.shared';
 import { AuthService } from '../../../core/services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegisterDto } from '../../../core/models/auth.model';
+import { ToasterService } from '../../../core/services/toaster.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,10 +15,11 @@ import { RegisterDto } from '../../../core/models/auth.model';
 export class SignUp {
   service = inject(AuthService);
   router = inject(Router);
+  toaster = inject(ToasterService);
 
   signupForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3),
-      Validators.maxLength(30), Validators.pattern('^[A-Za-z0-9\s\-]+$')]),
+    Validators.maxLength(30), Validators.pattern('^[A-Za-z0-9\s\-]+$')]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(4)])
   });
@@ -32,10 +34,10 @@ export class SignUp {
         this.router.navigate(['/']);
       },
       error: (err) => {
-        console.log(err);
-        return
+        this.toaster.TriggerNotify(err.error.msg, false);
+        console.error("Signup failed", err.error.errors)
       }
     });
   }
-  
+
 }

@@ -5,6 +5,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginDto } from '../../../core/models/auth.model';
 import { Constant } from '../../../core/constants/constant';
+import { ToasterService } from '../../../core/services/toaster.service';
 
 @Component({
   selector: 'app-log-in',
@@ -15,6 +16,7 @@ import { Constant } from '../../../core/constants/constant';
 export class LogIn {
   service = inject(AuthService);
   router = inject(Router);
+  toaster = inject(ToasterService);
 
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -32,7 +34,8 @@ export class LogIn {
         this.router.navigate(['/layout/income-home']);
       },
       error: (err) => {
-        console.log(err);
+        this.toaster.TriggerNotify(err.error.msg, false);
+        console.error("Login failed", err.error.errors)
       }
     });
   }

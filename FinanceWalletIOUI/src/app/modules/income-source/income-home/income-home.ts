@@ -54,6 +54,10 @@ export class IncomeHome {
         this.dto = res.dtoList;
         this.totalCount = res.totalCount;
         this.pageNum = res.pageNum;
+      },
+      error: err => {
+        this.toaster.TriggerNotify(err.error.msg, false);
+        console.error("Failed to fetch list", err.error.errors)
       }
     });
   }
@@ -79,7 +83,7 @@ export class IncomeHome {
       },
       error: err => {
         this.toaster.TriggerNotify(err.error.msg, false);
-        console.error("Create failed", err.error.errors)
+        console.error("Delete failed", err.error.errors)
       }
     });
   }

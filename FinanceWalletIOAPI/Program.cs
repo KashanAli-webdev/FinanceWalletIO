@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 // Common Servies and Repositories
 builder.Services.AddScoped<IAuthRepository, AuthRepository>(); 
 builder.Services.AddHttpContextAccessor();
@@ -38,20 +40,18 @@ builder.Services.AddScoped<IExpenseSourceRepository, ExpenseSourceRepository>();
 builder.Services.AddScoped<ExpenseTransactionDtoMapper>();
 builder.Services.AddScoped<IExpenseTransactionRepository, ExpenseTransactionRepository>();
 
-
-
+// Identity + JWT
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequiredLength = 1;
+    options.Password.RequiredLength = 4;
     options.Password.RequiredUniqueChars = 0;
     options.User.RequireUniqueEmail = true;
 })
     .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
-
 
 builder.Services.AddAuthentication(options =>
 {
@@ -77,8 +77,31 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
 builder.Services.AddAuthorization();
+
+// Add Rate Limiting
+builder.Services.AddRateLimiter(options =>
+{
+    // Apply FixedWindowLimiter to ALL endpoints by default
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(_ =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: "global", // all requests share same window
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 3,
+                Window = TimeSpan.FromSeconds(15),
+                QueueLimit = 2,
+                QueueProcessingOrder = QueueProcessingOrder.OldestFirst
+            }
+        )
+    );
+
+    options.OnRejected = async (context, token) => // Too Many Requests
+    {
+        context.HttpContext.Response.StatusCode = 429;
+        await context.HttpContext.Response.WriteAsync("Too many requests. Please try again later.");
+    };
+});
 
 builder.Services.AddCors(options =>
 {
@@ -86,11 +109,11 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("http://localhost:4200")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
+                  .WithHeaders("Authorization", "Content-Type")
+                  .WithMethods("GET", "POST", "PUT", "DELETE");
+        }
+    );
 });
-
 
 var app = builder.Build();
 
@@ -103,14 +126,11 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/openapi/v1.json", "Finance Wallet IO Web API v1");
     });
 }
-app.UseCors("AllowAngularApp");
-
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAngularApp");
+app.UseRateLimiter(); // Enable globally
 app.UseAuthentication();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
